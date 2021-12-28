@@ -101,6 +101,14 @@ class AudioRecorderViewController: UIViewController {
         recordingButton.backgroundColor = UIColor.black
     }
 
+    // Function returning path to directory where I am saving recording.
+    func getDirectory() -> URL {
+        // Search for all url in document directory, take the first one as a path and return it.
+        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = path[0]
+        return documentDirectory
+    }
+    
     func askForMicPermission() {
         // Ask for permison
         AVAudioSession.sharedInstance().requestRecordPermission { permisson in
@@ -120,6 +128,8 @@ class AudioRecorderViewController: UIViewController {
         
             // Set up image of button to STOP RECORDING (if user stop pressing it will change back to START RECORDING)
             recordingButton.setBackgroundImage(UIImage(named: "StopRecording"), for: .normal)
+            
+            
             
         }
         // User stopped to long press
