@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "StartRecording.png",
+      "filename" : "Recording.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "StartRecording@2x.png",
+      "filename" : "Recording@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "StartRecording@3x.png",
+      "filename" : "Recording@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

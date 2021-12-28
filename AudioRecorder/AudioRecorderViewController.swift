@@ -52,25 +52,35 @@ class AudioRecorderViewController: UIViewController {
     
     // Set up UI elements by placing it and setting it's constraints
     func setUpUIElements() {
+        // Adding recordingButton to view
         contentView.addSubview(recordingButton)
         
+        // Set up image cof button
         recordingButton.setBackgroundImage(UIImage(named: "StartRecording"), for: .normal)
+        
+        // In order to utilize auto layout I need to "activate" it by setting .translatesAutoresizingMaskIntoConstraints to false.
         recordingButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Settings constraints for recordingButton
         recordingButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         recordingButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         recordingButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -10).isActive = true
         
-        recordingButton.backgroundColor = UIColor.black
-        
+        // Adding recordingTable to view
         contentView.addSubview(recordingsTableView)
+        
+        // In order to utilize auto layout I need to "activate" it by setting .translatesAutoresizingMaskIntoConstraints to false.
         recordingsTableView.translatesAutoresizingMaskIntoConstraints = false
         
+        // Settings constraints for recordingsTabelView
         recordingsTableView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         recordingsTableView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         recordingsTableView.topAnchor.constraint(equalTo: recordingButton.bottomAnchor, constant: -15).isActive = true
         recordingsTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         
+        // SET BG FOR TESTING PURPOSE
         recordingsTableView.backgroundColor = UIColor.red
+        recordingButton.backgroundColor = UIColor.black
     }
 
 }
