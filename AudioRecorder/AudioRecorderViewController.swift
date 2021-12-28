@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AudioRecorderViewController: UIViewController {
 
@@ -14,9 +15,22 @@ class AudioRecorderViewController: UIViewController {
     var recordingButton:UIButton = UIButton()
     var recordingsTableView:UITableView = UITableView()
     
+    // Variables to record and play recordings
+    var recordingSession: AVAudioSession!
+    var audioRecorder: AVAudioRecorder!
+    var audioPlayer: AVAudioPlayer!
+
+    // Keep track of record already recorded
+    var numberOfRecords:Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Setting up session (initalziing)
+        recordingSession = AVAudioSession.sharedInstance()
+        
+        // Ask for permission
+        askForMicPermission()
         
         // Setup TableView
 //        recordingsTableView.delegate = self
@@ -87,6 +101,17 @@ class AudioRecorderViewController: UIViewController {
         recordingButton.backgroundColor = UIColor.black
     }
 
+    func askForMicPermission() {
+        // Ask for permison
+        AVAudioSession.sharedInstance().requestRecordPermission { permisson in
+            if permisson {
+                print("Permison to record ✅")
+            } else {
+                print("Permison dennied ‼️")
+            }
+        }
+    }
+    
     // This function is responsible for action when button is long pressed
     @objc func recordingPressed(sender: UILongPressGestureRecognizer) {
         
