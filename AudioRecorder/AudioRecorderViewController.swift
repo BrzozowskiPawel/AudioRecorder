@@ -104,6 +104,15 @@ class AudioRecorderViewController: UIViewController {
             recordingButton.setBackgroundImage(UIImage(named: "StartRecording"), for: .normal)
         }
     }
+    
+    // Function that dispalys an alert if something goes wrong
+    func displayAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "dismiss", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 //extension AudioRecorderViewController: UITableViewDelegate, UITableViewDataSource {
