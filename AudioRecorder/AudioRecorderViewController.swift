@@ -66,6 +66,10 @@ class AudioRecorderViewController: UIViewController {
         recordingButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         recordingButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -10).isActive = true
         
+        // Adding recognising long press gesture to recordingButton
+        let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(recordingPressed))
+        recordingButton.addGestureRecognizer(longPressRecogniser)
+        
         // Adding recordingTable to view
         contentView.addSubview(recordingsTableView)
         
@@ -83,6 +87,17 @@ class AudioRecorderViewController: UIViewController {
         recordingButton.backgroundColor = UIColor.black
     }
 
+    @objc func recordingPressed(sender: UILongPressGestureRecognizer) {
+        let button = sender.view as? UIButton
+        
+        if sender.state == .began {
+        
+            print("RECORDING")
+            
+        } else if sender.state == .ended {
+            print("STOPPED RECORDING")
+        }
+    }
 }
 
 //extension AudioRecorderViewController: UITableViewDelegate, UITableViewDataSource {
