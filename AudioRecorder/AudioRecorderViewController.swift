@@ -17,8 +17,6 @@ class AudioRecorderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor.red
         
         // Setup TableView
 //        recordingsTableView.delegate = self
@@ -27,14 +25,20 @@ class AudioRecorderViewController: UIViewController {
         // Set up contentView as "main" view. It will take almost (safearea) screen of view.
         setUpContentView()
         // Set up UI elements
-        setUPUIElements()
+        setUpUIElements()
     
     }
     
     // This function is responsible for setting up ContentView
     func setUpContentView() {
+        // Set up maion view background color to white (in othercase safeare spaces will be differen color).
+        self.view.backgroundColor = UIColor.white
+        
         // Add it to the main View
         self.view.addSubview(contentView)
+        
+        // Set up background color to white
+        contentView.backgroundColor = UIColor.white
         
         // In order to utilize auto layout I need to "activate" it by setting .translatesAutoresizingMaskIntoConstraints to false.
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,8 +51,13 @@ class AudioRecorderViewController: UIViewController {
     }
     
     // Set up UI elements by placing it and setting it's constraints
-    func setUPUIElements() {
+    func setUpUIElements() {
         contentView.addSubview(recordingButton)
+        
+        recordingButton.setBackgroundImage(UIImage(named: "StartRecording"), for: .normal)
+        recordingButton.translatesAutoresizingMaskIntoConstraints = false
+        recordingButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        recordingButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -10).isActive = true
         
         contentView.addSubview(recordingsTableView)
     }
