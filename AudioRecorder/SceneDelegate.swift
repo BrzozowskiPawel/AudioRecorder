@@ -16,7 +16,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        // Casting scene parameter as a UIWindowScene
+        guard let baseWindowScene = (scene as? UIWindowScene) else {
+            return
+        }
+        
+        // Creating main screen and nagigationController
+        let AudioRecorderVC = AudioRecorderViewController()
+        let navigationController = UINavigationController()
+        
+        // Using UINavigationController I am adding rootScreenVC to the stack.
+        navigationController.pushViewController(AudioRecorderVC, animated: true)
+        
+        // Create a new UIWindow based on the UIWindowScene we previously created.
+        // This can be easily done by doing a UIWindow(windowScene: scene), where scene is the UIWindowScene variable we have previously created using the guard statement.
+        let window = UIWindow(windowScene: baseWindowScene)
+        
+        // Set the UIWindow to be visible and be the main window for this app simply doing .makeKeyAndVisible()
+        window.makeKeyAndVisible()
+        
+        // Set the .rootViewController from UIWindow. Set a navigation controller to that variable,
+        window.rootViewController = navigationController // To use the UINavigationController
+        
+        // SceneDelegate already has variable called window of type UIWindow. Set this variable to the UIWindow that was created earlier.
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
