@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-class AudioRecorderViewController: UIViewController {
+class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
 
     // Decalaration of UI elements
     var contentView:UIView = UIView()
@@ -123,20 +123,50 @@ class AudioRecorderViewController: UIViewController {
     // This function is responsible for action when button is long pressed
     @objc func recordingPressed(sender: UILongPressGestureRecognizer) {
         
+        var tmpURL = getDirectory().appendingPathComponent("\(numberOfRecords).m4a")
+        
         // User started to long press
         if sender.state == .began {
         
             // Set up image of button to STOP RECORDING (if user stop pressing it will change back to START RECORDING)
             recordingButton.setBackgroundImage(UIImage(named: "StopRecording"), for: .normal)
             
+            // Increasing value of currenlty recorded sounds
+            numberOfRecords += 1
             
+            // Get path to the file name (and name it as current number of sound)
+            let filename = getDirectory().appendingPathComponent("\(numberOfRecords).m4a")
+            // Setting requaired to record
+            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 12000, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
             
+            tmpURL = filename
+            
+            // Start audio recording
+            do {
+                audioRecorder = try AVAudioRecorder(url: filename, settings: settings)
+                audioRecorder.delegate = self
+                audioRecorder.record()
+                
+            } catch {
+                displayAlert(title: "Error ‼️", message: "Recording failed.")
+            }
         }
         // User stopped to long press
         else if sender.state == .ended {
             
             // Set up image of button to START RECORDING (the same situation as above)
             recordingButton.setBackgroundImage(UIImage(named: "StartRecording"), for: .normal)
+            
+            // Stop recording
+            audioRecorder.stop()
+            
+            // TMP PLAYING
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: tmpURL)
+                audioPlayer.play()
+            } catch {
+                displayAlert(title: "Error ‼️", message: "Playing sound failed.")
+            }
         }
     }
     
