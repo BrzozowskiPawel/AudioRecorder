@@ -57,9 +57,20 @@ class AudioRecorderViewController: UIViewController {
         recordingButton.setBackgroundImage(UIImage(named: "StartRecording"), for: .normal)
         recordingButton.translatesAutoresizingMaskIntoConstraints = false
         recordingButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        recordingButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         recordingButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -10).isActive = true
         
+        recordingButton.backgroundColor = UIColor.black
+        
         contentView.addSubview(recordingsTableView)
+        recordingsTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        recordingsTableView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        recordingsTableView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        recordingsTableView.topAnchor.constraint(equalTo: recordingButton.bottomAnchor, constant: -15).isActive = true
+        recordingsTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
+        recordingsTableView.backgroundColor = UIColor.red
     }
 
 }
