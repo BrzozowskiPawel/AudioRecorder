@@ -87,15 +87,18 @@ class AudioRecorderViewController: UIViewController {
         recordingButton.backgroundColor = UIColor.black
     }
 
+    // This function is responsible for action when button is long pressed
     @objc func recordingPressed(sender: UILongPressGestureRecognizer) {
-        let button = sender.view as? UIButton
         
+        // User started to long press
         if sender.state == .began {
         
             // Set up image of button to STOP RECORDING (if user stop pressing it will change back to START RECORDING)
             recordingButton.setBackgroundImage(UIImage(named: "StopRecording"), for: .normal)
             
-        } else if sender.state == .ended {
+        }
+        // User stopped to long press
+        else if sender.state == .ended {
             
             // Set up image of button to START RECORDING (the same situation as above)
             recordingButton.setBackgroundImage(UIImage(named: "StartRecording"), for: .normal)
