@@ -92,10 +92,13 @@ class AudioRecorderViewController: UIViewController {
         
         if sender.state == .began {
         
-            print("RECORDING")
+            // Set up image of button to STOP RECORDING (if user stop pressing it will change back to START RECORDING)
+            recordingButton.setBackgroundImage(UIImage(named: "StopRecording"), for: .normal)
             
         } else if sender.state == .ended {
-            print("STOPPED RECORDING")
+            
+            // Set up image of button to START RECORDING (the same situation as above)
+            recordingButton.setBackgroundImage(UIImage(named: "StartRecording"), for: .normal)
         }
     }
 }
