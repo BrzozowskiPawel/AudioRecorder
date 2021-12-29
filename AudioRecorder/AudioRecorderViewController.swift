@@ -189,11 +189,14 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
     }
 }
 
+// tableView funstions:
 extension AudioRecorderViewController: UITableViewDelegate, UITableViewDataSource {
+    // Set number of rows equal to numberOfSaved sound retrieved from UserDefaults
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfRecords
     }
 
+    // Create a cell forch each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
         
@@ -202,14 +205,18 @@ extension AudioRecorderViewController: UITableViewDelegate, UITableViewDataSourc
         return cell
     }
     
+    // When suer presses on row play that sound
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Each path (URL) is just a path + name of file (numer of current recording sound).
+        // Get it and save to variable.
         let path = getDirectory().appendingPathComponent("\(indexPath.row+1).m4a")
         
+        // Try to play sound for selested row, if there is error display alert.
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: path)
             audioPlayer.play()
         } catch {
-            
+            displayAlert(title: "Error ‼️", message: "Playing failed.")
         }
     }
 
