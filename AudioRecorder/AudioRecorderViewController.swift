@@ -103,9 +103,9 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         // Setup cell for tableView
         recordingsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "myCell")
         
-        // SET BG FOR TESTING PURPOSE
-        recordingsTableView.backgroundColor = UIColor.red
-        recordingButton.backgroundColor = UIColor.black
+//        // SET BG FOR TESTING PURPOSE
+//        recordingsTableView.backgroundColor = UIColor.red
+//        recordingButton.backgroundColor = UIColor.black
     }
 
     // Using UserDefaults load and set new value for numberOfRecords
