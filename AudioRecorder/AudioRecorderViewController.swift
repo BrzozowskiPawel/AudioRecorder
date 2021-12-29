@@ -197,9 +197,14 @@ extension AudioRecorderViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
         
-        cell.textLabel?.text = String(indexPath.row + 1)
+        cell.textLabel?.text = "Recording \(indexPath.row + 1)"
         
         return cell
+    }
+    
+    // Set custom row height
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
     
     // When suer presses on row play that sound
