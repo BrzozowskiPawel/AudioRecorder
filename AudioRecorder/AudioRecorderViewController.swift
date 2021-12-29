@@ -34,8 +34,8 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         
         
         // Setup TableView
-//        recordingsTableView.delegate = self
-//        recordingsTableView.dataSource = self
+        recordingsTableView.delegate = self
+        recordingsTableView.dataSource = self
         
         // Set up contentView as "main" view. It will take almost (safearea) screen of view.
         setUpContentView()
@@ -96,6 +96,9 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         recordingsTableView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         recordingsTableView.topAnchor.constraint(equalTo: recordingButton.bottomAnchor, constant: -15).isActive = true
         recordingsTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
+        // Setup cell for tableView
+        recordingsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "myCell")
         
         // SET BG FOR TESTING PURPOSE
         recordingsTableView.backgroundColor = UIColor.red
@@ -168,6 +171,9 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
             // Save value of numberOFRecords to UserDefaults after saving
             UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
             
+            // Reload data after adding new recording
+            recordingsTableView.reloadData()
+            
         }
     }
     
@@ -181,14 +187,18 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
     }
 }
 
-//extension AudioRecorderViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 0
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        <#code#>
-//    }
-//
-//
-//}
+extension AudioRecorderViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return numberOfRecords
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
+        
+        cell.textLabel?.text = String(indexPath.row)
+        
+        return cell
+    }
+
+
+}
