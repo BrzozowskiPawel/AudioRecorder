@@ -32,6 +32,8 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         // Ask for permission
         askForMicPermission()
         
+        // Loading number of saved records from UserDefaults
+        loadNumberOfSavedSounds()
         
         // Setup TableView
         recordingsTableView.delegate = self
@@ -42,6 +44,7 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         // Set up UI elements
         setUpUIElements()
     
+        print("number of rec: \(numberOfRecords)")
     }
     
     // This function is responsible for setting up ContentView
@@ -161,12 +164,11 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         }
         // User stopped to long press
         else if sender.state == .ended {
+            // Clear the audioRecorder
+            audioRecorder = nil
             
             // Set up image of button to START RECORDING (the same situation as above)
             recordingButton.setBackgroundImage(UIImage(named: "StartRecording"), for: .normal)
-            
-            // Stop recording
-            audioRecorder.stop()
             
             // Save value of numberOFRecords to UserDefaults after saving
             UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
@@ -195,9 +197,20 @@ extension AudioRecorderViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
         
-        cell.textLabel?.text = String(indexPath.row)
+        cell.textLabel?.text = String(indexPath.row + 1)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let path = getDirectory().appendingPathComponent("\(indexPath.row+1).m4a")
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: path)
+            audioPlayer.play()
+        } catch {
+            
+        }
     }
 
 
