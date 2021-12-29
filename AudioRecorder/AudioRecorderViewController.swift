@@ -32,6 +32,7 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         // Ask for permission
         askForMicPermission()
         
+        
         // Setup TableView
 //        recordingsTableView.delegate = self
 //        recordingsTableView.dataSource = self
@@ -101,6 +102,13 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         recordingButton.backgroundColor = UIColor.black
     }
 
+    // Using UserDefaults load and set new value for numberOfRecords
+    func loadNumberOfSavedSounds() {
+        if let number:Int = UserDefaults.standard.object(forKey: "myNumber") as? Int {
+            numberOfRecords = number
+        }
+    }
+    
     // Function returning path to directory where I am saving recording.
     func getDirectory() -> URL {
         // Search for all url in document directory, take the first one as a path and return it.
@@ -123,8 +131,6 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
     // This function is responsible for action when button is long pressed
     @objc func recordingPressed(sender: UILongPressGestureRecognizer) {
         
-        var tmpURL = getDirectory().appendingPathComponent("\(numberOfRecords).m4a")
-        
         // User started to long press
         if sender.state == .began {
         
@@ -139,7 +145,6 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
             // Setting requaired to record
             let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 12000, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
             
-            tmpURL = filename
             
             // Start audio recording
             do {
@@ -160,13 +165,9 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
             // Stop recording
             audioRecorder.stop()
             
-            // TMP PLAYING
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: tmpURL)
-                audioPlayer.play()
-            } catch {
-                displayAlert(title: "Error ‼️", message: "Playing sound failed.")
-            }
+            // Save value of numberOFRecords to UserDefaults after saving
+            UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
+            
         }
     }
     
