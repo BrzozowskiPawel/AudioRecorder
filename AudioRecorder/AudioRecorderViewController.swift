@@ -39,7 +39,7 @@ class AudioRecorderViewController: UIViewController, AVAudioRecorderDelegate {
         recordingsTableView.delegate = self
         recordingsTableView.dataSource = self
         
-        // Set up contentView as "main" view. It will take almost (safearea) screen of view.
+        // Set up contentView as "main" view. It will take almost all screen (safearea) of view.
         setUpContentView()
         // Set up UI elements
         setUpUIElements()
